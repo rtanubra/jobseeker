@@ -13,6 +13,19 @@ from django.views.generic import (
 # Create your views here.
 class JobListView(ListView):
     queryset = Job.objects.all()
+    def trim_names(self,jobs):
+        job_names =[]
+        for job in jobs:
+            job_name = job.job_title[:20]
+            job_names.append(job_name)
+        return job_names
+
+    def get_context_data(self,**kwargs):
+        context= super().get_context_data(**kwargs)
+        jobs = Job.objects.all()
+        context["jobs"] = self.trim_names(jobs)
+        return context
+
 
 class JobUpdateView(UpdateView):
     queryset = Job.objects.all()

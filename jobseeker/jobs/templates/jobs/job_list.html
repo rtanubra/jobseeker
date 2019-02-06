@@ -1,3 +1,4 @@
+{% load jobs_extras %}
 <table>
     <thead>
         <tr>
@@ -5,16 +6,16 @@
             <th>ID</th>
             <th>Company Name</th>
             <th>Applied</th>
-            <th>Qualification status</th>
+            <th>Qualified</th>
             <th>Edit</th>
         </tr>
     </thead>
     <tbody>
         {% for object in object_list %}
         <tr>
-            <td>{{object.job_title}}</td>
+            <td>{{object.job_title|trim_string}}</td>
             <td>{{object.id}}</td>
-            <td>{{object.job_company}}</td>
+            <td>{{object.job_company|trim_string}}</td>
             <td><a href="{{object.job_link}}" target="_blank">{{object.job_applied}}</a></td>
             <td>{{object.job_qualified}}</td>
             <td><a href="{% url 'jobs:jobs_update' object.id %}" ><button>Update</button></a></td>
