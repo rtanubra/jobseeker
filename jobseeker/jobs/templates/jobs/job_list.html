@@ -2,6 +2,7 @@
     <thead>
         <tr>
             <th>Job Title</th>
+            <th>ID</th>
             <th>Company Name</th>
             <th>Applied</th>
             <th>Qualification status</th>
@@ -12,10 +13,11 @@
         {% for object in object_list %}
         <tr>
             <td>{{object.job_title}}</td>
+            <td>{{object.id}}</td>
             <td>{{object.job_company}}</td>
             <td><a href="{{object.job_link}}" target="_blank">{{object.job_applied}}</a></td>
             <td>{{object.job_qualified}}</td>
-            <td>EDIT</td>
+            <td><a href="{% url 'jobs:jobs_update' object.id %}" ><button>Update</button></a></td>
         </tr>
         {% endfor %}
     </tbody>

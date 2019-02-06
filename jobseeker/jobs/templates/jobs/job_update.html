@@ -1,0 +1,11 @@
+<h3>Company: {{job.job_company}} </h3>
+<h3>Job Title: {{job.job_title}}</h3>
+<form method=POST action="">
+{% csrf_token %}
+{{form.as_p}}
+<input type=submit value='Update'>
+</form>
+<br>
+<a><button>Apply Now</button></a>
+<br>
+<a><button>Back To Jobs </button></a>
