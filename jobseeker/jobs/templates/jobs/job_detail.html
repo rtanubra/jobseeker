@@ -1,0 +1,8 @@
+<h3>{{object.job_title}}</h3>
+<h4>At {{object.job_company}}</h4>
+<p>Applied: {{job.job_applied}}</p>
+<p>qualified: {{job.job_qualified}}</p>
+<p>job last action: {{job.job_last_action}}</p>
+<p>Job comments:{{job.job_comment}}</p>
+<a href= "{% url 'jobs:jobs_list' %}" ><button>Return to list</button></a>
+<a href="{% url 'jobs:jobs_update' object.id %}" ><button>Update View</button></a>

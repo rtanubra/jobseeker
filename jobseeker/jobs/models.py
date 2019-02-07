@@ -1,5 +1,7 @@
 from django.db import models
 from datetime import date
+from django.utils import timezone
+from django.urls import reverse
 
 # Create your models here.
 class Job(models.Model):
@@ -15,5 +17,8 @@ class Job(models.Model):
     job_qualified = models.IntegerField(default=0)
     #Need to limit this from -1(rejected),0,1,2,
     job_application_status = models.IntegerField(default=0)
-    job_last_action = models.DateField()
+    job_last_action = models.DateField(default=timezone.now)
     job_comment = models.TextField(default="Job Pulled, let's apply")
+
+    def get_absolute_url(self):
+        return reverse('jobs:jobs_detail',kwargs={"pk":self.id})

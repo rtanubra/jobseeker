@@ -1,6 +1,8 @@
 from django.shortcuts import render,get_object_or_404
 from .models import Job
 from .forms import JobChangeForm
+from datetime import date
+from dateutil.relativedelta import relativedelta
 
 from django.views.generic import (
     CreateView,
@@ -12,38 +14,20 @@ from django.views.generic import (
 )
 # Create your views here.
 class JobListView(ListView):
-    queryset = Job.objects.all()
-    def trim_names(self,jobs):
-        job_names =[]
-        for job in jobs:
-            job_name = job.job_title[:20]
-            job_names.append(job_name)
-        return job_names
+    #Next three lines used to filter dates
+    today = date.today()
+    last_month = today - relativedelta(months=1)
+    queryset = Job.objects.filter(job_last_action__range=[last_month,today])
+    #queryset = Job.objects.all()
 
-    def get_context_data(self,**kwargs):
-        context= super().get_context_data(**kwargs)
-        jobs = Job.objects.all()
-        context["jobs"] = self.trim_names(jobs)
-        return context
+class JobListView2(ListView):
+    queryset= Job.objects.filter(job_qualified__gt=-1)
 
+class JobDetailView(DetailView):
+    template_name = 'jobs/job_detail.html'
+    queryset= Job.objects.all()
 
 class JobUpdateView(UpdateView):
-    queryset = Job.objects.all()
-    template_name = 'jobs/job_update.html'
-    fields = [
-        "job_applied",
-        'job_qualified',
-        'job_application_status',
-        'job_last_action',
-        'job_comment'
-    ]
-    def get_context_data(self,**kwargs):
-        context= super().get_context_data(**kwargs)
-        job_id = self.kwargs.get('job_id')
-        job = get_object_or_404(Job,id=job_id)
-        context["job"] = job
-        return context
-
-    def get_object(self):
-        id = self.kwargs.get('job_id')
-
+    template_name= 'jobs/job_update.html'
+    queryset= Job.objects.all()
+    form_class = JobChangeForm

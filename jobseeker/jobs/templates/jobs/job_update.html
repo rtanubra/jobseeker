@@ -6,6 +6,6 @@
 <input type=submit value='Update'>
 </form>
 <br>
-<a><button>Apply Now</button></a>
+<a href="{{job.job_link}}" target = "_blank" ><button>Apply Now</button></a>
 <br>
-<a><button>Back To Jobs </button></a>
+<a href="{% url 'jobs:jobs_list' %}"><button>Back To Jobs </button></a>

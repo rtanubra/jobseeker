@@ -2,7 +2,6 @@ from django import forms
 from .models import Job
 
 class JobChangeForm(forms.ModelForm):
-    
     class Meta:
         model = Job
         fields = [
